@@ -9,6 +9,12 @@ All of these tools require [**a recent version of python 3**](https://www.python
 
 ---
 
+### fe5py - Common python code
+
+`fe5py` is a set of code that ends up being common between various python scripts that I write.
+
+---
+
 ### c2a - CSV to ASM converter
 
 Usage: `python c2a.py csvfile outfile [indent]`
@@ -61,3 +67,12 @@ Usage: `python compare.py file1 file2`
 Example: `python compare.py Examples/compareExample1.bin Examples/compareExample2.bin`
 
 Given two files, prints differences between them as a series of bytes.
+
+---
+
+### rip_portraits - vanilla portrait ripper
+
+Usage: `python rip_portraits.py ROM_name destination_dir`
+Example: `python rip_portraits.py FE5.sfc PORTRAITS`
+
+This script rips FE5's portraits into nice .pngs and puts them in `destination_dir`.
