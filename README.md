@@ -70,6 +70,17 @@ Given two files, prints differences between them as a series of bytes.
 
 ---
 
+### format_portrait - turn templated portraits into raw format
+
+Usage: `python format_portrait.py portrait.png`
+Example: `python format_portrait.py Examples/Soldier.png`
+
+Given a templated portrait, outputs an image in the format that FE5 expects. Also outputs all palettes.
+
+The templated format is an 80x64 RGB .png image. The main portrait takes up the left side. The portrait's talking frames are at (48, 32) for the openmost frame and (48, 48) for the partially-open frame. All of the portrait's palettes are at (48, 0+), with each new palette a pixel below the last. See the example `Examples/Soldier.png`.
+
+---
+
 ### rip_portraits - vanilla portrait ripper
 
 Usage: `python rip_portraits.py ROM_name destination_dir`
