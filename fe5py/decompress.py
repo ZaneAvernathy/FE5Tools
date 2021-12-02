@@ -1,5 +1,4 @@
 
-
 from math import ceil
 from typing import ByteString, Optional
 from .memory import read_byte, read_byte_range
@@ -149,7 +148,7 @@ def _double(
 
   """
   length = (read_byte(data, offset) & 0x0F) + 1
-  start= offset + 1
+  start = offset + 1
   decomp = b"".join([
     bytes([i, i]) for i in read_byte_range(data, start, length)
     ])
