@@ -87,3 +87,20 @@ Usage: `python rip_portraits.py ROM_name destination_dir`
 Example: `python rip_portraits.py FE5.sfc PORTRAITS`
 
 This script rips FE5's portraits into nice .pngs and puts them in `destination_dir`.
+
+---
+
+### fe5tileset - tileset updating/creating utility
+
+Usage: `python fe5tileset.py (update|create|export) filepath [index]`
+Example: `python fe5tileset.py create Examples/Tileset/Example.tmx 5`
+
+This script creates and updates tilesets for use with [**the Tiled map editor**](https://www.mapeditor.org/). It stores the tilesets as Tiled .tmx files alongside 8 tile graphics images and an export tileset image, which will be used as the tileset image for editing maps.
+
+Each tile graphics image contains the same tiles as the others, just using a different palette. They are labeled 0-7 and the tileset's exported palette will be in this order. Each image is a 128px by 320px indexed 16-color .png. The first color in each palette is considered to be the transparent color, although there is never any layering.
+
+For a tileset `folder/foo.tmx`, the tiles images are named `folder/foo_0.png`, `folder/foo_1.png`, etc. Specifying an `index` for `update` or `create` will use the corresponding image, i.e. `python fe5tileset.py update folder/foo.tmx 4` will use `folder/foo_4.png`.
+
+The tilesets themselves are 64x64 graphics tiles that get assembled into a 32x32 metatile image suitable for mapping. Each tileset uses Tiled's object layer to specify the terrain type for its metatiles, where the object's `type` field determines the type. This field has the format `0xNN whatever` where `0xNN` is a hexadecimal byte with the terrain type and `whatever` is an optional terrain name, which is included in generated tilesets for convenience. The name isn't assembled into anything.
+
+You can check [**here**](https://github.com/ZaneAvernathy/VoltEdge/blob/master/VOLTEDGE/Terrain.h) for a list of terrain types.
