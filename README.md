@@ -104,3 +104,9 @@ For a tileset `folder/foo.tmx`, the tiles images are named `folder/foo_0.png`, `
 The tilesets themselves are 64x64 graphics tiles that get assembled into a 32x32 metatile image suitable for mapping. Each tileset uses Tiled's object layer to specify the terrain type for its metatiles, where the object's `type` field determines the type. This field has the format `0xNN whatever` where `0xNN` is a hexadecimal byte with the terrain type and `whatever` is an optional terrain name, which is included in generated tilesets for convenience. The name isn't assembled into anything.
 
 You can check [**here**](https://github.com/ZaneAvernathy/VoltEdge/blob/master/VOLTEDGE/Terrain.h) for a list of terrain types.
+
+The `create` mode initializes a new .tmx tileset with the given path/name. An optional index may be specified, which will use the tile graphics image with the specified index to create the tileset's other graphics tile images. Otherwise, the images and their palettes will be blank.
+
+The `update` mode updates the specified tileset's tile graphics iamges to match the last-modified tile image's. An index can be specified such that the images will be updated using that image instead of the last-modified one. This mode will also regenerate the output tileset image.
+
+The `export` mode converts the tileset into native SNES data. The resultant config and graphics data will need to be compressed by an external tool before being inserted. This mode will also regenerate the output tileset image.
