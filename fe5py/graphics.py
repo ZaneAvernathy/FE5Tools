@@ -25,7 +25,7 @@ class Color:
         raise ValueError(
           f"Length of {repr(value)} must be 3, got {len(value)}."
           )
-      self.r, self.b, self.g = value
+      self.r, self.g, self.b = value
     elif isinstance(value, Color):
       self.r, self.g, self.b = value.r, value.g, value.b
     else:
@@ -131,6 +131,16 @@ class Palette:
     """Converts the Palette to a list of RGB tuples."""
     palette = _fit(self, length, fillcolor)
     return [color.to_rgb() for color in palette]
+
+  def to_PIL_list(
+      self,
+      length: Optional[int] = None,
+      fillcolor: Color = Color(),
+      ) -> list:
+    """Converts the Palette to a flat list for use with indexed PIL images."""
+    palette = _fit(self, length, fillcolor)
+    return [b for c in palette for b in c.to_rgb()]
+
 
   def requantize(self, length: int, fillcolor: Color=Color()) -> tuple:
     """
@@ -450,8 +460,12 @@ class IndexedTile(TileBase):
       for row in rows: row.reverse()
     if yflip:
       rows.reverse()
+    if (mode == "RGB"):
+      data = [palette[c].to_rgb() for c in _flatten(rows)]
+    else:
+      data = _flatten(rows)
     im = Image.new(mode, (8, 8))
-    im.putdata(_flatten(rows))
+    im.putdata(data)
     if (mode == "P"):
       im.putpalette(palette.to_PIL_list())
     return im
