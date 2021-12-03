@@ -327,7 +327,7 @@ class MapTileset:
         e_x, e_y = (meta_x * 2) + sub_x, (meta_y * 2) + sub_y
         entry = self.config[(e_y * 64) + e_x]
 
-        pal, index = divmod(entry.gid, 640)
+        pal, index = divmod(entry.gid - 1, 640)
         index += 0x80
         index |= (pal << 10)
         index |= (entry.hflip << 14)
