@@ -110,3 +110,25 @@ The `create` mode initializes a new .tmx tileset with the given path/name. An op
 The `update` mode updates the specified tileset's tile graphics iamges to match the last-modified tile image's. An index can be specified such that the images will be updated using that image instead of the last-modified one. This mode will also regenerate the output tileset image.
 
 The `export` mode converts the tileset into native SNES data. The resultant config and graphics data will need to be compressed by an external tool before being inserted. This mode will also regenerate the output tileset image.
+
+---
+
+### rip_battle_weapons.py - vanilla animations-on battle weapon ripper
+
+Usage: `python rip_battle_weapons.py ROM_name destination_dir`
+Example: `python rip_battle_weapons.py FE5.sfc BattleWeapons`
+
+This script rips FE5's animations-on battle weapons into nice .pngs and puts them in `destination_dir`. It uses the same template format as `format_battle_weapon.py`. It also writes a text file to the destination listing weapons that share the same graphics.
+
+---
+
+### format_battle_weapon.py - turn templated animations-on battle weapons into raw format
+
+Usage: `python format_battle_weapon.py weapon.type.png`
+Example: `python format_battle_weapon.py Examples/WolfBeil.axe.png`
+
+Given a templated weapon, outputs an image in the format that FE5 expects. Also outputs all palettes.
+
+The templates have different formats for each type of weapon and the formatter determines which template to use by the filename, so `IronSword.sword.png` uses the sword template, `IronLance.lance.png` uses the lance template, etc. See the examples for their layouts.
+
+Each template also includes a space for palettes that the weapons use, up to a max of 7 per weapon. The limit is arbitrary, it only exists for my own sake. See the examples for where the palettes go on each image.
