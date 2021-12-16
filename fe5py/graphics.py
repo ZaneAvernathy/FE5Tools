@@ -42,7 +42,7 @@ class Color:
     self.r, self.g, self.b = [_select(s) for s in range(0, 15, 5)]
 
   def __eq__(self, other):
-    return (self.r == other.r) & (self.g == other.g) | (self.b == other.b)
+    return (self.r == other.r) & (self.g == other.g) & (self.b == other.b)
 
   def __hash__(self):
     return hash((self.r, self.b, self.g))
