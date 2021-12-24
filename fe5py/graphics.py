@@ -114,6 +114,23 @@ class Palette:
     colors = ", ".join([repr(c) for c in self.colors])
     return f"Palette(colors=[{colors}])"
 
+  def __add__(self, other):
+    if isinstance(other, Palette):
+      self.colors += other.colors
+    else:
+      self += Palette(other)
+    return self
+
+  def __radd__(self, other):
+    if isinstance(other, Palette):
+      self.colors = other.colors + self.colors
+    else:
+      self = Palette(other) + self
+    return self
+
+  def __iadd__(self, other):
+    return self + other
+
   def to_bytes(
       self,
       length: Optional[int] = None,
