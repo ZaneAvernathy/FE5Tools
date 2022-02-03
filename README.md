@@ -132,3 +132,24 @@ Given a templated weapon, outputs an image in the format that FE5 expects. Also 
 The templates have different formats for each type of weapon and the formatter determines which template to use by the filename, so `IronSword.sword.png` uses the sword template, `IronLance.lance.png` uses the lance template, etc. See the examples for their layouts.
 
 Each template also includes a space for palettes that the weapons use, up to a max of 7 per weapon. The limit is arbitrary, it only exists for my own sake. See the examples for where the palettes go on each image.
+
+---
+
+### format_map.py - turn Tiled .tmx maps into binary data
+
+Usage: `python format_map.py map.tmx`
+Example: `python format_map.py Examples/Map.tmx`
+
+This script generates up to three files for a given map:
+
+An uncompressed binary for the main layer
+An uncompressed binary for tile changes, if they exist
+A tile change definitions file for use with 64tass, if they exist.
+
+Maps should be made with [**the Tiled map editor**](https://www.mapeditor.org/). They must be orthogonal, finite maps with a tile size of 16x16 pixels. Maps should use one 512x512 pixel tileset image.
+
+Maps must have exactly one tile layer named `Main`. This layer must have tiles that cover the entire map.
+
+Additional tile layers are treated as tile change layers. Each tile change layer must have exactly one rectangular region of tiles. Each region will be given a definition in the definitions file, so that you can refer to them by name in events.
+
+The output `.bin` files must be compressed before they can be used in-game.
