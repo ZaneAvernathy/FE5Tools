@@ -45,7 +45,10 @@ def main() -> None:
 
   Additional tile layers will be treated as tile changes, and should only 
   have tiles covering a rectangular area of the map that they replace
-  when triggered.
+  when triggered. These tile layers may have a string property called `Reveal`
+  with possible values being `True` or `False`. The effect of this is not
+  fully known, but if set to `False`, hidden units under these tile changes
+  will not be revealed when triggered.
   """
 
   infile = Path(sys.argv[1]).resolve()
@@ -55,6 +58,7 @@ def main() -> None:
   tilemap = tmx.TileMap.load(infile)
 
   change_count = 0
+  flag_count = 0
   change_lines = ["\n"]
   change_def_data, change_tile_data = bytearray(), bytearray()
   change_header_size = 6 * (len(tilemap.layers_list) - 1)
@@ -125,6 +129,16 @@ def main() -> None:
         if not isrect:
           throw(bad_change_error, name=layer.name, file=infile)
 
+        # Some vanilla maps have tile changes that have a special flag
+        # that probably* is used to keep them from revealing hidden units?
+        # The number of flagged changes is also tracked.
+
+        for prop in layer.properties:
+          if (prop.name.lower() == "reveal") and (str(prop.value).lower() == "false"):
+            first_tile |= 0x80
+            flag_count += 1
+            continue
+
         header = 2 + len(change_tile_data) + change_header_size
         change_def_data.extend(word(header))
         change_def_data.extend([first_tile, first_row, width, height])
@@ -140,7 +154,7 @@ def main() -> None:
 
   if (change_count > 0):
 
-    c = b"".join([word(change_count - 1), change_def_data, change_tile_data])
+    c = b"".join([bytes([change_count, flag_count]), change_def_data, change_tile_data])
     changefile = infile.with_name(infile.stem + "MapChanges.bin")
     changefile.write_bytes(c)
 

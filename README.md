@@ -152,4 +152,6 @@ Maps must have exactly one tile layer named `Main`. This layer must have tiles t
 
 Additional tile layers are treated as tile change layers. Each tile change layer must have exactly one rectangular region of tiles. Each region will be given a definition in the definitions file, so that you can refer to them by name in events.
 
+*Experimental: tile change layers may have a string property called `Reveal` where the possible values are `True` or `False`. If `False`, the tile change will not reveal units underneath them when triggered.*
+
 The output `.bin` files must be compressed before they can be used in-game.
