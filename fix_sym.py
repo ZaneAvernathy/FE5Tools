@@ -27,5 +27,19 @@ if __name__ == "__main__":
         label = label.lstrip(".").replace(":", ".")
         fixed.append(f"al {int(address, 16):06X} {label}\n")
 
+    def keyfunc(string):
+        """
+        Turn a VICE symbol line into a sorting key value.
+
+        This aims to help when sorting lines with the same
+        address, like a table and its first entry, along with
+        the first part of the first entry. We want to ensure
+        that the order is table->entry->entry field.
+        """
+        _, address, symbol = string.split()
+        address = int("0x" + address, 16)
+        nesting_level = symbol.count(".")
+        return (address, nesting_level, len(symbol))
+
     with open(symfile, "w", encoding="UTF-8") as o:
-        o.writelines(sorted(fixed))
+        o.writelines(sorted(fixed, key=keyfunc))
