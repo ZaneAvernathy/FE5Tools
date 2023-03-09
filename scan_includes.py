@@ -4,7 +4,7 @@ import posixpath
 import argparse
 
 include_types = [".include", ".binclude"]
-binary_types = [".binary", "binary("]
+binary_types = [".binary", "binary(", ".crossbank.start *,"]
 
 NOT_FOUND = -1 # For str.find results
 
