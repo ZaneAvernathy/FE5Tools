@@ -22,7 +22,7 @@ Example: `python c2a.py Examples/c2aExample.csv Examples/c2aExample.csv.asm 2`
 
 `c2a` converts a formatted CSV table into something insertable using `64tass`. Each row in the table is turned into a set of definitions and a command (usually a struct, macro, or other assembler directive). Each entry is also given a definition for its index in the table.
 
-The upper-leftmost cell in the table contains the command that will be used for each entry along with an index that the first entry will be considered to have started at, separated by a space.
+The upper-leftmost cell in the table contains 1-3 parts, separated by spaces. The first part is the command that will be used for each entry. The second part, if provided, will change the starting index of the first entry from 0 to whatever number is provided. The third part, if provided, changes the index increment between entries from 1 to whatever number is provided.
 
 The top row of the table contains names for each field that will be filled in the command. The leftmost column contains the names for each entry. The names are used for the indexes of each entry, and are also combined with the field names for each definition.
 
